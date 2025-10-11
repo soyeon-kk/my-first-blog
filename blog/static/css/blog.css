@@ -1,0 +1,40 @@
+/* 공통 배경, 글꼴 */
+body {
+    font-family: "Helvetica", sans-serif;
+    margin: 0;
+    background-color: #fff;
+}
+
+/* 상단 헤더 */
+.page-header {
+    background-color: orange;
+    padding: 20px;
+}
+
+.page-header h1 a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+/* 게시글 */
+.post {
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 800px;
+    border-bottom: 1px solid #ddd;
+}
+
+.date {
+    color: #888;
+    font-size: 14px;
+}
+
+/* 이미지 */
+.blog-image-list {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; /* 이미지를 꽉 채워 자르기 */
+    border-radius: 10px;
+    margin-top: 10px;
+}
