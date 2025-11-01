@@ -1,40 +1,252 @@
-/* 공통 배경, 글꼴 */
+:root {
+  --neu-1: #ecf0f3;
+  --neu-2: #d1d9e6;
+  --white: #f9f9f9;
+  --gray: #a0a5a8;
+  --black: #181818;
+  --accent: #4B70E2;
+}
+
+/* 리셋 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
 body {
-    font-family: "Helvetica", sans-serif;
-    margin: 0;
-    background-color: #fff;
+  font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--neu-1);
+  color: var(--black);
 }
 
-/* 상단 헤더 */
+/* 공통 뉴모피즘 박스 */
+.neu {
+  background: var(--neu-1);
+  border-radius: 16px;
+  box-shadow: 8px 8px 16px var(--neu-2), -8px -8px 16px var(--white);
+}
+
+/* 레이아웃 */
 .page-header {
-    background-color: orange;
-    padding: 20px;
+  width: min(1000px, 92%);
+  margin: 32px auto 24px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
 .page-header h1 a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 22px;
 }
 
-/* 게시글 */
+/* 본문 컨테이너 */
+.content.container {
+  width: min(1000px, 92%);
+  margin: 0 auto 64px;
+}
+
+/* 버튼 */
+.btn, button, .button {
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 26px;
+  box-shadow: 6px 6px 12px var(--neu-2), -6px -6px 12px var(--white);
+  transition: .2s transform ease;
+}
+.btn:hover, button:hover { transform: translateY(-1px) scale(.99); }
+.btn.btn-danger { background: #e24b4b; }
+.btn.btn-secondary { background: #a0a5a8; }
+
+/* 목록(피드) 카드 */
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 35px;
+  margin-top: 40px;
+}
+
+/* 게시글 카드 */
 .post {
-    margin: 20px auto;
-    padding: 10px;
-    max-width: 800px;
-    border-bottom: 1px solid #ddd;
+  background: var(--neu-1);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 8px 8px 16px var(--neu-2), -8px -8px 16px var(--white);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.date {
-    color: #888;
-    font-size: 14px;
+/* hover 시 카드 전체 확대 */
+.post:hover {
+  transform: scale(1.02) translateY(-5px);
+  box-shadow: 12px 12px 24px var(--neu-2), -12px -12px 24px var(--white);
 }
 
-/* 이미지 */
-.blog-image-list {
-    width: 100%;
-    height: 400px;
-    object-fit: cover; /* 이미지를 꽉 채워 자르기 */
-    border-radius: 10px;
-    margin-top: 10px;
+/* 이미지 개별 확대 효과 제거 (중복 방지) */
+.post-image-wrapper img:hover {
+  transform: none;
+}
+
+
+/* 제목 */
+.post h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.post h1 a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+/* 본문 미리보기 */
+.post p {
+  color: var(--gray);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* 날짜 */
+.post .date {
+  font-size: 12px;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+
+/* 목록용 정사각형 이미지 박스 */
+.post-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;  /* ✅ 정사각형 비율 유지 */
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  box-shadow: 6px 6px 12px var(--neu-2), -6px -6px 12px var(--white);
+}
+.post-image-wrapper img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.post-image-wrapper img:hover { transform: scale(1.02); }
+
+/* 상세 페이지용 이미지 (원본 유지) */
+.detail-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 6px 6px 12px var(--neu-2), -6px -6px 12px var(--white);
+}
+.detail-image-wrapper img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+.detail-image-wrapper img:hover {
+  transform: translate(-50%, -50%) scale(1.02);
+}
+
+/* 폼(작성/수정) */
+.form-container {
+  padding: 26px;
+  border-radius: 16px;
+  background: var(--neu-1);
+  box-shadow: inset 5px 5px 10px var(--neu-2), inset -5px -5px 10px var(--white);
+}
+form p { margin: 10px 0; }
+form input, form textarea, form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  outline: none;
+  background: var(--neu-1);
+  color: var(--black);
+  border-radius: 10px;
+  font-size: 14px;
+  box-shadow: inset 2px 2px 5px var(--neu-2), inset -2px -2px 5px var(--white);
+  transition: .15s;
+}
+form input:focus, form textarea:focus {
+  box-shadow: inset 4px 4px 8px var(--neu-2), inset -4px -4px 8px var(--white);
+}
+form button[type="submit"] { margin-top: 10px; }
+
+/* 삭제 확인 */
+.delete-confirm {
+  text-align: center;
+  padding: 34px;
+  border-radius: 16px;
+  background: var(--neu-1);
+  box-shadow: 8px 8px 16px var(--neu-2), -8px -8px 16px var(--white);
+}
+.delete-confirm h2 { font-size: 18px; margin-bottom: 14px; }
+
+/* 📸 커스텀 파일 업로드 버튼 */
+#id_image { display: none; }
+
+.file-upload-label {
+  display: inline-block;
+  background: var(--neu-1);
+  color: var(--black);
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 12px 40px;
+  cursor: pointer;
+  box-shadow: 6px 6px 12px var(--neu-2), -6px -6px 12px var(--white);
+  transition: all 0.25s ease;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+.file-upload-label:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 16px var(--neu-2), -8px -8px 16px var(--white);
+  color: var(--accent);
+}
+#file-chosen {
+  font-size: 13px;
+  color: var(--gray);
+  margin-left: 12px;
+  vertical-align: middle;
+}
+
+/* 링크 기본색 */
+a { color: var(--accent); }
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+.post:hover h1 a,
+.post:hover p {
+  color: var(--black);
+  filter: brightness(1.1);
 }
