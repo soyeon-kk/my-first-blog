@@ -1,13 +1,11 @@
 {% extends 'blog/base.html' %}
-
 {% block content %}
-  <div class="delete-confirm">
-    <h2>정말 "{{ post.title }}" 글을 삭제하시겠습니까?</h2>
-
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-danger">삭제</button>
-      <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-secondary">취소</a>
-    </form>
-  </div>
+<div class="delete-card">
+  <h2>정말 "{{ post.title }}" 글을 삭제하시겠습니까?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">삭제</button>
+    <a href="{% url 'post_detail' pk=post.pk %}" class="btn cancel">취소</a>
+  </form>
+</div>
 {% endblock %}

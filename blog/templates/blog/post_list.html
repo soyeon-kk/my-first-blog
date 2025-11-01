@@ -1,19 +1,17 @@
 {% extends 'blog/base.html' %}
-
 {% block content %}
+  <div class="post-list">
     {% for post in posts %}
-        <div class="post">
-            <div class="date">
-                {{ post.published_date }}
-            </div>
-
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-            <p>{{ post.text|linebreaksbr }}</p>
-
-            <!-- 이미지 출력 -->
-            {% if post.image %}
-                <img src="{{ post.image.url }}" class="rounded intruder-image-list" alt="{{ post.title }}">
-            {% endif %}
-        </div>
+      <div class="post">
+        {% if post.image %}
+          <div class="post-image-wrapper">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+          </div>
+        {% endif %}
+        <div class="date">{{ post.published_date }}</div>
+        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        <p>{{ post.text|truncatewords:20 }}</p>
+      </div>
     {% endfor %}
+  </div>
 {% endblock %}

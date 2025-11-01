@@ -1,9 +1,46 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-  <h2>새 글 작성 / 수정</h2>
-  <form method="POST" enctype="multipart/form-data">
+  <div class="form-container">
+    <h2>새 글 작성 / 수정</h2>
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">저장</button>
-  </form>
+
+      <p>
+        {{ form.title.label_tag }}
+        {{ form.title }}
+      </p>
+
+      <p>
+        {{ form.text.label_tag }}
+        {{ form.text }}
+      </p>
+
+      <!-- 🔹 이미지 필드 직접 커스텀 -->
+      <div class="file-field">
+        <label class="file-upload-label" for="id_image">이미지 선택</label>
+        <span id="file-chosen">선택된 파일 없음</span>
+        {{ form.image }} <!-- 실제 input[type=file], CSS에서 숨김 -->
+      </div>
+
+      <button type="submit" class="btn">저장</button>
+    </form>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("id_image");
+    const fileChosen = document.getElementById("file-chosen");
+    const label = document.querySelector(".file-upload-label");
+
+    // 라벨 클릭 시 파일 선택창 열기
+    label.addEventListener("click", () => fileInput.click());
+
+    // 파일 선택 시 이름 표시
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length > 0) {
+        fileChosen.textContent = fileInput.files[0].name;
+      } else {
+        fileChosen.textContent = "선택된 파일 없음";
+      }
+    });
+  </script>
 {% endblock %}
