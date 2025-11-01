@@ -5,6 +5,12 @@
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
 
+      <!-- ✅ 작성자 입력 필드 추가 -->
+      <p>
+        {{ form.author.label_tag }}
+        {{ form.author }}
+      </p>
+
       <p>
         {{ form.title.label_tag }}
         {{ form.title }}
@@ -19,7 +25,7 @@
       <div class="file-field">
         <label class="file-upload-label" for="id_image">이미지 선택</label>
         <span id="file-chosen">선택된 파일 없음</span>
-        {{ form.image }} <!-- 실제 input[type=file], CSS에서 숨김 -->
+        {{ form.image }}
       </div>
 
       <button type="submit" class="btn">저장</button>
