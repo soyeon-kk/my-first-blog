@@ -1,0 +1,9 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+  <h2>새 글 작성 / 수정</h2>
+  <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">저장</button>
+  </form>
+{% endblock %}

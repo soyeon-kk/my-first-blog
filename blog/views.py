@@ -40,6 +40,9 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
+def js_test(request):
+    return render(request, 'blog/js_test.html')
+
 class blogImage(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
