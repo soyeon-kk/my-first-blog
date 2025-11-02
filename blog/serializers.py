@@ -6,4 +6,4 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     class Meta:
         model = Post
-        fields= ('author', 'title', 'text', 'created_date', 'published_date', 'image')
+        fields= ('id', 'author', 'title', 'text', 'created_date', 'published_date', 'image')
