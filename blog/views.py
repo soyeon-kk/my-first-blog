@@ -3,7 +3,7 @@ from django.utils import timezone
 from .models import Post
 from rest_framework.response import Response
 from .forms import PostForm
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from .serializers import PostSerializer
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 
