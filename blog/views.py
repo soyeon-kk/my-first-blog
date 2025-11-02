@@ -5,17 +5,22 @@ from .forms import PostForm
 from rest_framework import viewsets
 from .serializers import PostSerializer
 
+
+# 글 목록
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
+
+# 글 상세보기
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
+
+# 새 글 작성
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
@@ -25,12 +30,15 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+    # ✨ post=None을 넘겨서 템플릿의 {% if post %} 조건문이 정상 작동하게
+    return render(request, 'blog/post_edit.html', {'form': form, 'post': None})
 
+
+# 글 수정
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, request.FILES, instance=post) 
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -39,8 +47,11 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    # ✨ post 객체를 같이 넘겨서 취소 버튼이 detail로 이동 가능
+    return render(request, 'blog/post_edit.html', {'form': form, 'post': post})
 
+
+# 글 삭제
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -48,9 +59,13 @@ def post_delete(request, pk):
         return redirect('post_list')
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
 
+
+# 테스트용 JS 페이지
 def js_test(request):
     return render(request, 'blog/js_test.html')
 
-class blogImage(viewsets.ModelViewSet):
+
+# Django REST Framework ViewSet
+class BlogImage(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer

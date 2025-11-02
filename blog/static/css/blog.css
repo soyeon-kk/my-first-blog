@@ -45,23 +45,47 @@ body {
   margin: 0 auto 64px;
 }
 
-/* 버튼 */
-.btn, button, .button {
-  display: inline-block;
+/* 버튼 통합 스타일 */
+.button-group {
+  display: flex;
+  align-items: center;  /* ✅ 수직 중앙정렬 */
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn,
+button.btn,
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;             /* ✅ 고정 높이 */
+  min-width: 110px;         /* ✅ 동일 너비 */
+  padding: 0 22px;          /* ✅ 내부 여백 동일 */
+  border-radius: 26px;
   border: none;
-  cursor: pointer;
-  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
   background: var(--accent);
   color: #fff;
-  font-weight: 700;
-  padding: 10px 18px;
-  border-radius: 26px;
+  text-decoration: none;
+  cursor: pointer;
   box-shadow: 6px 6px 12px var(--neu-2), -6px -6px 12px var(--white);
-  transition: .2s transform ease;
+  transition: all 0.2s ease;
+  line-height: 1;           /* ✅ 텍스트 기준선 고정 */
+  vertical-align: middle;   /* ✅ 브라우저 기본 차이 제거 */
 }
-.btn:hover, button:hover { transform: translateY(-1px) scale(.99); }
-.btn.btn-danger { background: #e24b4b; }
-.btn.btn-secondary { background: #a0a5a8; }
+
+.btn:hover,
+button.btn:hover,
+a.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+/* 버튼 색상 변형 */
+.btn-secondary { background: #a0a5a8; color: #fff; }
+.btn-danger { background: #e24b4b; }
 
 /* 목록(피드) 카드 */
 .post-list {
@@ -90,12 +114,6 @@ body {
   box-shadow: 12px 12px 24px var(--neu-2), -12px -12px 24px var(--white);
 }
 
-/* 이미지 개별 확대 효과 제거 (중복 방지) */
-.post-image-wrapper img:hover {
-  transform: none;
-}
-
-
 /* 제목 */
 .post h1 {
   font-size: 20px;
@@ -122,11 +140,11 @@ body {
   margin-bottom: 8px;
 }
 
-/* 목록용 정사각형 이미지 박스 */
+/* 이미지 박스 */
 .post-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;  /* ✅ 정사각형 비율 유지 */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 16px;
   margin-bottom: 15px;
@@ -142,7 +160,7 @@ body {
 }
 .post-image-wrapper img:hover { transform: scale(1.02); }
 
-/* 상세 페이지용 이미지 (원본 유지) */
+/* 상세 이미지 */
 .detail-image-wrapper {
   position: relative;
   width: 100%;
@@ -168,7 +186,7 @@ body {
   transform: translate(-50%, -50%) scale(1.02);
 }
 
-/* 폼(작성/수정) */
+/* 폼 컨테이너 */
 .form-container {
   padding: 26px;
   border-radius: 16px;
@@ -191,7 +209,6 @@ form input, form textarea, form select {
 form input:focus, form textarea:focus {
   box-shadow: inset 4px 4px 8px var(--neu-2), inset -4px -4px 8px var(--white);
 }
-form button[type="submit"] { margin-top: 10px; }
 
 /* 삭제 확인 */
 .delete-confirm {
@@ -203,7 +220,7 @@ form button[type="submit"] { margin-top: 10px; }
 }
 .delete-confirm h2 { font-size: 18px; margin-bottom: 14px; }
 
-/* 📸 커스텀 파일 업로드 버튼 */
+/* 파일 업로드 */
 #id_image { display: none; }
 
 .file-upload-label {
@@ -233,7 +250,7 @@ form button[type="submit"] { margin-top: 10px; }
   vertical-align: middle;
 }
 
-/* 링크 기본색 */
+/* 링크 색상 */
 a { color: var(--accent); }
 
 /* 반응형 */
@@ -250,3 +267,4 @@ a { color: var(--accent); }
   color: var(--black);
   filter: brightness(1.1);
 }
+

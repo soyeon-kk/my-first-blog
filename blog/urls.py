@@ -4,7 +4,8 @@ from django.urls import include
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register('Post', views.blogImage)
+router.register('Post', views.BlogImage)
+
 
 urlpatterns = [
     path('', views.post_list, name='post_list'),
