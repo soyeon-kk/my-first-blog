@@ -4,6 +4,7 @@ from .models import Post
 from .forms import PostForm
 from rest_framework import viewsets
 from .serializers import PostSerializer
+from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 
 
 # 글 목록
@@ -65,7 +66,9 @@ def js_test(request):
     return render(request, 'blog/js_test.html')
 
 
-# Django REST Framework ViewSet
 class BlogImage(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-published_date')
     serializer_class = PostSerializer
+
+    # 이걸 추가해야 Android에서 JSON, form-data, multipart 모두 받음
+    parser_classes = [JSONParser, FormParser, MultiPartParser]
