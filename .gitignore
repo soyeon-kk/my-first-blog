@@ -1,7 +1,28 @@
+# Python
+__pycache__/
 *.pyc
-*~
-__pycache__
-venv
-db.sqlite3
-/static
+*.pyo
+*.pyd
+*.sqlite3
+
+# Environment
+env/
+venv/
+myvenv/
+*.env
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# macOS / Windows
 .DS_Store
+Thumbs.db
+
+# Django (있는 경우)
+staticfiles/
+media/
+db.sqlite3
+
+# 기타
+*.log
