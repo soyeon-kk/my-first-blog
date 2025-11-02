@@ -69,6 +69,31 @@ def js_test(request):
 class BlogImage(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-published_date')
     serializer_class = PostSerializer
-
-    # 이걸 추가해야 Android에서 JSON, form-data, multipart 모두 받음
     parser_classes = [JSONParser, FormParser, MultiPartParser]
+
+    # ✅ Android multipart/form-data 대응
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['author'] = request.user.id if request.user.is_authenticated else None
+        data['created_date'] = timezone.now()
+        data['published_date'] = timezone.now()
+
+        serializer = self.get_serializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print("❌ CREATE ERROR:", serializer.errors)  # PythonAnywhere 로그에서 디버깅용
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        data = request.data.copy()
+        data['published_date'] = timezone.now()
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        print("❌ UPDATE ERROR:", serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
