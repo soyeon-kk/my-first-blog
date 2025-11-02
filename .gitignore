@@ -26,3 +26,4 @@ db.sqlite3
 
 # 기타
 *.log
+blog/migrations/0005_alter_post_image.py
