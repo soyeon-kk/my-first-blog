@@ -7,7 +7,8 @@ from rest_framework import viewsets
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 from .serializers import PostSerializer
 
-# ----- HTML 템플릿용 함수 뷰 -----
+
+# ----- HTML 템플릿(블로그) 뷰 -----
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -22,7 +23,6 @@ def post_new(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            # User.__str__()가 username을 돌려주므로 CharField에 문자열로 저장됨
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
@@ -55,10 +55,10 @@ def post_delete(request, pk):
 def js_test(request):
     return render(request, 'blog/js_test.html')
 
+
 # ----- DRF API -----
 
 class BlogImage(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-published_date')
     serializer_class = PostSerializer
     parser_classes = [JSONParser, FormParser, MultiPartParser]
-    # create/update는 시리얼라이저의 create/update에 맡김 (오버라이드 없음)
