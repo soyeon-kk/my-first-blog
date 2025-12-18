@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Post
 from django.utils import timezone
 
+
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.CharField(read_only=True)
     created_date = serializers.DateTimeField(read_only=True)
@@ -10,14 +11,15 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'author', 'title', 'text', 'created_date', 'published_date', 'image']
+        fields = ['id', 'author', 'title', 'text',
+                  'created_date', 'published_date', 'image']
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         url = data.get("image")
         request = self.context.get('request')
 
-        if request and url and url.startswith("/"):
+        if request and url and isinstance(url, str) and url.startswith("/"):
             data["image"] = request.build_absolute_uri(url)
 
         return data
