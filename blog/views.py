@@ -11,8 +11,13 @@ from .serializers import PostSerializer
 # ----- HTML 템플릿(블로그) 뷰 -----
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    posts = Post.objects.filter(
+        published_date__lte=timezone.now()
+    ).order_by('-published_date')  # 최신 글이 맨 위로
+
+    return render(request, 'blog/post_list.html', {
+        'posts': posts,
+    })
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
