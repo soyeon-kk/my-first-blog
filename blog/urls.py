@@ -10,6 +10,8 @@ from .views import (
     BlogImage,
     admin_login,
     admin_logout,
+    admin_dashboard,
+    admin_dashboard_data
 )
 
 router = routers.DefaultRouter()
@@ -23,6 +25,8 @@ urlpatterns = [
     path("post/<int:pk>/edit/", post_edit, name="post_edit"),
     path("post/<int:pk>/delete/", post_delete, name="post_delete"),
     path("js_test/", js_test, name="js_test"),
+    path("dashboard/", admin_dashboard, name="admin_dashboard"),
+    path("dashboard/data/", admin_dashboard_data, name="admin_dashboard_data"),
 
     # 관리자 로그인
     path("login/", admin_login, name="admin_login"),

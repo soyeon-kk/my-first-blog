@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             name='SecurityKey',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='키 별칭 (예: 관리자용, 조교용 등)', max_length=50)),
+                ('name', models.CharField(help_text='키 별칭', max_length=50)),
                 ('key', models.CharField(help_text='실제로 입력할 보안키 문자열', max_length=64, unique=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
